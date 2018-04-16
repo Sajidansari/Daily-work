@@ -15,7 +15,7 @@
 const fs = require('fs');
 
 var orginalNote = {
-    title: 'Sajid Ansari',
+    title: 'Mohammad Sajid Ansari',
     body: 'My Name is Mohammad Sajid Ansari'
 }
 
@@ -26,4 +26,4 @@ var noteString = fs.readFileSync('notes.json');
 var note = JSON.parse(noteString);
 
 console.log(typeof note);
-console.log(note.body);
+console.log(note.title);

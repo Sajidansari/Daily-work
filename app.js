@@ -1,29 +1,41 @@
 /**
  * Created by lcom25 on 3/4/18.
  */
-console.log('Starting app.js !');
 
 const fs = require('fs');
 const _ = require('lodash');
 const yargs = require('yargs');
 
 const notes = require('./notes.js');
-
 const argv = yargs.argv;
 var command =   argv._[0]
-console.log("Command: ", command);
-console.log("Yargs : ", argv);
-
 
 if(command === 'add'){
-    console.log('Adding new note');
-    notes.addNote(argv.title, argv.body);
+    var note = notes.addNote(argv.title, argv.body);
+    if(note){
+        console.log('Note Created');
+        notes.logNotes(note);
+    }else{
+        console.log(`Note title taken`);
+    }
+
 }else if(command === 'list'){
-    notes.getAll();
+    var allNote = notes.getAll();
+    console.log(`Printing ${allNote.length} note(s).`)
+    allNote.forEach((note) => notes.logNotes(note));
 }else if(command === 'read'){
-    notes.getNotes(argv.title);
+    var note = notes.getNotes(argv.title);
+    if(note){
+        console.log('Note Found');
+        notes.logNotes(note);
+    }else{
+        console.log(`Note not found`);
+    }
+
 }else if(command === 'remove'){
-    notes.removeNote();
+    var noteRemove = notes.removeNote(argv.title);
+    var message = noteRemove ? 'Note was removed' : 'Note not found';
+    console.log("Message : ", message);
 }else{
     console.log('Command not recognise');
 }
